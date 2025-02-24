@@ -18,7 +18,7 @@ import com.devffl.dslist.services.GameService;
 public class GameController {
 	
 	@Autowired
-	private GameService gameService;
+	private GameService gameService; 
 	
 	@GetMapping(value = "/{id}")
 	public GameDTO findById(@PathVariable Long id) {
