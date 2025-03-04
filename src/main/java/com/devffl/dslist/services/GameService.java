@@ -12,6 +12,8 @@ import com.devffl.dslist.entities.Game;
 import com.devffl.dslist.projections.GameMinProjection;
 import com.devffl.dslist.repositories.GameRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class GameService {
 
@@ -38,7 +40,7 @@ public class GameService {
 		return result.stream().map(x -> new GameMinDTO(x)).toList();
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public GameDTO addGame(GameDTO gameDTO) {
         Game game = new Game();
         game.setTitle(gameDTO.getTitle());
@@ -52,6 +54,18 @@ public class GameService {
 
         game = gameRepository.save(game);
         return new GameDTO(game);  // Retorna o jogo salvo como DTO
+    }
+
+	@Transactional
+	public String deleteGame(Long id) {
+        // Verifica se o jogo existe antes de excluir
+        Game game = gameRepository.findById(id).orElseThrow(() ->
+            new EntityNotFoundException("Jogo com ID " + id + " não encontrado.")
+        );
+
+        System.out.println("Excluindo jogo: " + game.getTitle()); // Log para debug
+        gameRepository.delete(game);
+        return "Jogo com ID " + id + " foi excluído com sucesso.";
     }
 }
  
