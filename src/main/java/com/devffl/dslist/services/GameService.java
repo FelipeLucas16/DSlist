@@ -37,5 +37,21 @@ public class GameService {
 		List<GameMinProjection> result = gameRepository.searchByList(listId);
 		return result.stream().map(x -> new GameMinDTO(x)).toList();
 	}
+
+	@Transactional(readOnly = true)
+	public GameDTO addGame(GameDTO gameDTO) {
+        Game game = new Game();
+        game.setTitle(gameDTO.getTitle());
+        game.setYear(gameDTO.getYear());
+        game.setGenre(gameDTO.getGenre());
+        game.setPlatforms(gameDTO.getPlatforms());
+        game.setScore(gameDTO.getScore());
+        game.setImgUrl(gameDTO.getImgUrl());
+        game.setShortDescription(gameDTO.getShortDescription());
+        game.setLongDescription(gameDTO.getLongDescription());
+
+        game = gameRepository.save(game);
+        return new GameDTO(game);  // Retorna o jogo salvo como DTO
+    }
 }
  
