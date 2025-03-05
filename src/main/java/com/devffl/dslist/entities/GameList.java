@@ -1,11 +1,15 @@
 package com.devffl.dslist.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +20,10 @@ public class GameList {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
+	
+	 @ManyToMany(mappedBy = "gameLists", cascade = CascadeType.ALL)
+	    private Set<Game> games = new HashSet<>();
+
 	
 	public GameList() {
 	}

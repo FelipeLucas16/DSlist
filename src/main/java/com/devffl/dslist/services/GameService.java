@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devffl.dslist.dto.GameDTO;
 import com.devffl.dslist.dto.GameMinDTO;
 import com.devffl.dslist.entities.Game;
+import com.devffl.dslist.entities.GameList;
 import com.devffl.dslist.projections.GameMinProjection;
 import com.devffl.dslist.repositories.GameRepository;
 
@@ -67,5 +68,6 @@ public class GameService {
         gameRepository.delete(game);
         return "Jogo com ID " + id + " foi excluído com sucesso.";
     }
+	
 }
  

@@ -1,12 +1,17 @@
 package com.devffl.dslist.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +35,14 @@ public class Game {
 	@Column(columnDefinition = "TEXT")
 	private String longDescription;
 	
+	@ManyToMany
+	@JoinTable(
+		    name = "TB_BELONGING", 
+		    joinColumns = @JoinColumn(name = "game_id"),
+		    inverseJoinColumns = @JoinColumn(name = "list_id")
+		)
+    private Set<GameList> gameLists = new HashSet<>();
+	
 	public Game() {
 		
 	}
@@ -46,7 +59,8 @@ public class Game {
 		this.shortDescription = shortDescription;
 		this.longDescription = longDescription;
 	}
-
+	
+	 
 	public Double getScore() {
 		return score;
 	}
