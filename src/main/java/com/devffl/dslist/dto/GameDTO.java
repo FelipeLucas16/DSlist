@@ -15,6 +15,7 @@ public class GameDTO {
 	private String imgUrl;
 	private String shortDescription;
 	private String longDescription;
+	private String category;
 	
 	public GameDTO() {
 	}
@@ -93,6 +94,14 @@ public class GameDTO {
 
 	public void setLongDescription(String longDescription) {
 		this.longDescription = longDescription;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 	
