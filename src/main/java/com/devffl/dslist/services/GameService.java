@@ -103,5 +103,42 @@ public class GameService {
         return "Jogo com ID " + id + " foi excluído com sucesso.";
     }
 	
+	@Transactional
+	public GameDTO updateGame(Long id, GameDTO gameDTO) {
+	    // Buscar o jogo pelo ID
+	    Game game = gameRepository.findById(id)
+	            .orElseThrow(() -> new EntityNotFoundException("Jogo com ID " + id + " não encontrado."));
+
+	    // Atualizar os dados do jogo
+	    game.setTitle(gameDTO.getTitle());
+	    game.setYear(gameDTO.getYear());
+	    game.setGenre(gameDTO.getGenre());
+	    game.setPlatforms(gameDTO.getPlatforms());
+	    game.setScore(gameDTO.getScore());
+	    game.setImgUrl(gameDTO.getImgUrl());
+	    game.setShortDescription(gameDTO.getShortDescription());
+	    game.setLongDescription(gameDTO.getLongDescription());
+
+	    // Atualizar categoria (GameList)
+	    if (gameDTO.getCategory() != null) {
+	        GameList gameList = gameListRepository.findByName(gameDTO.getCategory())
+	                .orElseGet(() -> {
+	                    GameList newGameList = new GameList();
+	                    newGameList.setName(gameDTO.getCategory());
+	                    return gameListRepository.save(newGameList);
+	                });
+
+	        // Criar ou atualizar a relação entre o jogo e a categoria
+	        Belonging belonging = new Belonging(game, gameList, 0);
+
+	        belongingRepository.save(belonging);
+	    } 
+
+	    // Salvar a atualização no banco de dados
+	    game = gameRepository.save(game);
+
+	    // Retornar o jogo atualizado
+	    return new GameDTO(game);
+	}
+	
 }
- 
