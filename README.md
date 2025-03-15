@@ -11,7 +11,6 @@ Este é um projeto desenvolvido com **Spring Boot** para gerenciar uma lista de 
 - **Banco de Dados H2 / PostgreSQL**
 - **JPA e DTOs**
 - **API REST**
-- **Frontend em HTML + JavaScript**
 
 ## ⚙️ Funcionalidades
 
